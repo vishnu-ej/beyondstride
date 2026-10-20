@@ -22,6 +22,15 @@ export const metadata: Metadata = {
   title: "BeyondStride — Break Your Baseline. Step Beyond.",
   description:
     "Next-generation precision-engineered athletic performance house. Purposeful biomechanics, technical fabric intelligence, and editorial silhouettes.",
+  icons: {
+    icon: [
+      { url: "/favicon.ico" },
+      { url: "/icon.png", type: "image/png" },
+    ],
+    apple: [
+      { url: "/apple-touch-icon.png" },
+    ],
+  },
   openGraph: {
     title: "BeyondStride — Break Your Baseline. Step Beyond.",
     description:

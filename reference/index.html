@@ -1,0 +1,933 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="BeyondStride — Precision-engineered performance essentials for intentional athletes. Join the waitlist for early access." />
+  <meta name="theme-color" content="#F4EFEA" />
+  <title>BeyondStride — Beyond the Baseline</title>
+
+  <!-- Preconnect for Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,300&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind CSS (CDN play) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            oat:     '#F4EFEA',
+            blush:   '#F3B39C',
+            espresso:'#231F20',
+            'oat-dark': '#EAE3DC',
+            'blush-dark':'#E8906F',
+          },
+          fontFamily: {
+            jakarta: ['"Plus Jakarta Sans"', 'sans-serif'],
+          },
+          letterSpacing: {
+            widest2: '0.2em',
+            tracked: '0.1em',
+          },
+          animation: {
+            'fade-up':    'fadeUp 0.8s cubic-bezier(0.16,1,0.3,1) forwards',
+            'fade-in':    'fadeIn 0.6s ease forwards',
+            'pulse-soft': 'pulseSoft 2.5s ease-in-out infinite',
+            'float':      'floatUp 6s ease-in-out infinite',
+          },
+          keyframes: {
+            fadeUp: {
+              '0%':   { opacity: '0', transform: 'translateY(28px)' },
+              '100%': { opacity: '1', transform: 'translateY(0)' },
+            },
+            fadeIn: {
+              '0%':   { opacity: '0' },
+              '100%': { opacity: '1' },
+            },
+            pulseSoft: {
+              '0%,100%': { opacity: '1' },
+              '50%':     { opacity: '0.4' },
+            },
+            floatUp: {
+              '0%,100%': { transform: 'translateY(0px) rotate(-15deg)' },
+              '50%':     { transform: 'translateY(-18px) rotate(-15deg)' },
+            },
+          },
+        },
+      },
+    };
+  </script>
+
+  <style>
+    /* ─── CSS Custom Properties ─────────────────────────── */
+    :root {
+      --color-base:      #F4EFEA;
+      --color-blush:     #F3B39C;
+      --color-espresso:  #231F20;
+      --color-muted:     #7A6F68;
+      --color-border:    #D9D2CB;
+      --radius-form:     6px;
+      --transition-base: 220ms cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* ─── Reset / Base ──────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; }
+
+    html {
+      scroll-behavior: smooth;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    body {
+      background-color: var(--color-base);
+      color: var(--color-espresso);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      overflow-x: hidden;
+      margin: 0;
+    }
+
+    /* ─── Stagger delays ────────────────────────────────── */
+    .delay-100 { animation-delay: 100ms; }
+    .delay-200 { animation-delay: 200ms; }
+    .delay-300 { animation-delay: 300ms; }
+    .delay-400 { animation-delay: 400ms; }
+    .delay-500 { animation-delay: 500ms; }
+    .delay-600 { animation-delay: 600ms; }
+    .delay-700 { animation-delay: 700ms; }
+    .delay-900 { animation-delay: 900ms; }
+
+    .opacity-0-init { opacity: 0; }
+
+    /* ─── Wordmark ──────────────────────────────────────── */
+    .wordmark-beyond  { font-weight: 300; letter-spacing: 0.12em; }
+    .wordmark-stride  { font-weight: 700; letter-spacing: 0.06em; }
+
+    /* ─── Noise texture overlay ─────────────────────────── */
+    .noise-layer::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.028;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-repeat: repeat;
+      background-size: 180px 180px;
+    }
+
+    /* ─── Status dot ────────────────────────────────────── */
+    .status-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background-color: var(--color-blush);
+      display: inline-block;
+      flex-shrink: 0;
+    }
+
+    /* ─── Eyebrow badge ─────────────────────────────────── */
+    .eyebrow-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: 1px solid var(--color-border);
+      padding: 6px 14px;
+      font-size: 0.68rem;
+      letter-spacing: 0.18em;
+      font-weight: 500;
+      color: var(--color-muted);
+      background: rgba(255,255,255,0.45);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border-radius: 2px;
+      text-transform: uppercase;
+    }
+
+    /* ─── Form ──────────────────────────────────────────── */
+    .form-input {
+      width: 100%;
+      background: rgba(255,255,255,0.7);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-form);
+      padding: 14px 18px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 400;
+      color: var(--color-espresso);
+      outline: none;
+      transition: border-color var(--transition-base), box-shadow var(--transition-base), background var(--transition-base);
+      -webkit-appearance: none;
+    }
+
+    .form-input::placeholder { color: #9E948C; }
+
+    .form-input:focus {
+      border-color: var(--color-espresso);
+      background: rgba(255,255,255,0.95);
+      box-shadow: 0 0 0 3px rgba(35,31,32,0.07);
+    }
+
+    .form-input.error {
+      border-color: #C0392B;
+      box-shadow: 0 0 0 3px rgba(192,57,43,0.09);
+    }
+
+    .form-input.success {
+      border-color: #27AE60;
+      box-shadow: 0 0 0 3px rgba(39,174,96,0.09);
+    }
+
+    /* ─── CTA Button ────────────────────────────────────── */
+    .cta-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      background: var(--color-espresso);
+      color: var(--color-base);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      border: 1.5px solid var(--color-espresso);
+      border-radius: var(--radius-form);
+      padding: 14px 28px;
+      cursor: pointer;
+      transition: background var(--transition-base), color var(--transition-base), transform 180ms ease, box-shadow var(--transition-base);
+      white-space: nowrap;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-btn::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--color-blush);
+      transform: translateX(-100%);
+      transition: transform 320ms cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .cta-btn:hover::before  { transform: translateX(0); }
+    .cta-btn:hover          { color: var(--color-espresso); border-color: var(--color-blush-dark); }
+    .cta-btn:hover .btn-text { position: relative; z-index: 1; }
+    .cta-btn .btn-text       { position: relative; z-index: 1; transition: color var(--transition-base); }
+    .cta-btn .btn-arrow      { position: relative; z-index: 1; transition: transform 220ms ease, color var(--transition-base); }
+    .cta-btn:hover .btn-arrow { transform: translateX(4px); }
+
+    .cta-btn:active { transform: scale(0.987); }
+    .cta-btn:focus-visible {
+      outline: 2px solid var(--color-blush);
+      outline-offset: 3px;
+    }
+
+    .cta-btn:disabled {
+      opacity: 0.55;
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+
+    /* ─── Social links ──────────────────────────────────── */
+    .social-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--color-muted);
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-decoration: none;
+      text-transform: uppercase;
+      transition: color var(--transition-base);
+    }
+    .social-link:hover { color: var(--color-espresso); }
+
+    /* ─── Vector SVG wireframe ──────────────────────────── */
+    .vector-glow {
+      filter: drop-shadow(0 0 28px rgba(243,179,156,0.35));
+    }
+
+    /* ─── Floating orbs ─────────────────────────────────── */
+    .orb {
+      border-radius: 50%;
+      position: absolute;
+      pointer-events: none;
+      filter: blur(80px);
+      opacity: 0.55;
+    }
+
+    /* ─── Privacy modal ─────────────────────────────────── */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(35,31,32,0.55);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 220ms ease;
+    }
+
+    .modal-overlay.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .modal-card {
+      background: var(--color-base);
+      border: 1px solid var(--color-border);
+      border-radius: 8px;
+      max-width: 480px;
+      width: 90%;
+      padding: 36px;
+      transform: translateY(16px);
+      transition: transform 280ms cubic-bezier(0.16,1,0.3,1);
+    }
+
+    .modal-overlay.open .modal-card { transform: translateY(0); }
+
+    /* ─── Divider ───────────────────────────────────────── */
+    .ruling {
+      width: 40px;
+      height: 1px;
+      background: var(--color-border);
+      display: inline-block;
+    }
+
+    /* ─── Spinner ───────────────────────────────────────── */
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .spinner {
+      width: 16px;
+      height: 16px;
+      border: 2px solid rgba(244,239,234,0.4);
+      border-top-color: var(--color-base);
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+      display: none;
+    }
+    .cta-btn.loading .spinner { display: block; }
+    .cta-btn.loading .btn-text,
+    .cta-btn.loading .btn-arrow { display: none; }
+
+    /* ─── Inline message ────────────────────────────────── */
+    .form-msg {
+      font-size: 0.78rem;
+      font-weight: 500;
+      margin-top: 8px;
+      min-height: 18px;
+      display: none;
+    }
+    .form-msg.visible { display: block; }
+    .form-msg.error   { color: #C0392B; }
+    .form-msg.success { color: #27AE60; }
+
+    /* ─── Parallax hero gradient strip ─────────────────── */
+    .gradient-strip {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 180px;
+      background: linear-gradient(to top, var(--color-base), transparent);
+      pointer-events: none;
+    }
+
+    /* ─── Tag pill ──────────────────────────────────────── */
+    .tag-pill {
+      display: inline-flex;
+      align-items: center;
+      background: rgba(243,179,156,0.18);
+      border: 1px solid rgba(243,179,156,0.5);
+      color: #8C5843;
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 4px 12px;
+      border-radius: 2px;
+    }
+
+    /* ─── Metric card ───────────────────────────────────── */
+    .metric-card {
+      border: 1px solid var(--color-border);
+      border-radius: 6px;
+      padding: 20px 24px;
+      background: rgba(255,255,255,0.55);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      transition: border-color var(--transition-base), transform var(--transition-base);
+    }
+    .metric-card:hover {
+      border-color: var(--color-blush);
+      transform: translateY(-2px);
+    }
+
+    /* ─── Footer link ───────────────────────────────────── */
+    .footer-link {
+      color: var(--color-muted);
+      text-decoration: none;
+      font-size: 0.75rem;
+      transition: color var(--transition-base);
+    }
+    .footer-link:hover { color: var(--color-espresso); }
+
+    /* ─── Scrollbar ─────────────────────────────────────── */
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: var(--color-base); }
+    ::-webkit-scrollbar-thumb { background: var(--color-border); border-radius: 4px; }
+  </style>
+</head>
+
+<body class="font-jakarta">
+
+  <!-- ══════════════════════════════════════════════════════
+       NAVIGATION
+  ══════════════════════════════════════════════════════ -->
+  <nav class="fixed top-0 left-0 right-0 z-50 px-6 md:px-10 py-5 flex items-center justify-between"
+       style="background: rgba(244,239,234,0.82); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-bottom: 1px solid rgba(217,210,203,0.6);">
+
+    <!-- Wordmark -->
+    <a href="#" class="flex items-center gap-0.5 no-underline" aria-label="BeyondStride Home">
+      <span class="wordmark-beyond text-sm tracking-widest uppercase" style="color:var(--color-espresso); font-size: 0.82rem;">BEYOND</span>
+      <span class="wordmark-stride text-sm uppercase" style="color:var(--color-espresso); font-size: 0.82rem;">STRIDE</span>
+    </a>
+
+    <!-- Right cluster -->
+    <div class="flex items-center gap-5 md:gap-7">
+      <!-- Social links — hidden on xs -->
+      <div class="hidden sm:flex items-center gap-5">
+        <a href="#" class="social-link" aria-label="Instagram">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+            <circle cx="12" cy="12" r="4"/>
+            <circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/>
+          </svg>
+          <span>IG</span>
+        </a>
+        <a href="#" class="social-link" aria-label="X / Twitter">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.73-8.835L1.254 2.25H8.08l4.261 5.632 5.903-5.632Zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+          </svg>
+          <span>X</span>
+        </a>
+      </div>
+
+      <!-- Status badge -->
+      <div class="flex items-center gap-2 text-xs font-medium" style="color: var(--color-muted); letter-spacing: 0.06em;">
+        <span class="status-dot animate-pulse-soft" aria-hidden="true"></span>
+        <span class="hidden md:inline">Launching Q1 2027</span>
+        <span class="md:hidden">Q1 2027</span>
+      </div>
+    </div>
+  </nav>
+
+
+  <!-- ══════════════════════════════════════════════════════
+       HERO SECTION
+  ══════════════════════════════════════════════════════ -->
+  <main class="relative min-h-screen flex flex-col noise-layer" style="padding-top: 72px;">
+
+    <!-- Atmospheric orbs -->
+    <div class="orb" style="width:520px;height:520px;background:#F3B39C;top:-120px;right:-160px;opacity:0.22;" aria-hidden="true"></div>
+    <div class="orb" style="width:380px;height:380px;background:#E8C5B5;bottom:80px;left:-100px;opacity:0.18;" aria-hidden="true"></div>
+
+    <!-- Inner grid -->
+    <div class="relative z-10 flex-1 grid grid-cols-1 lg:grid-cols-2 gap-0 max-w-7xl mx-auto w-full px-6 md:px-10 py-16 md:py-20 lg:py-24 items-center">
+
+      <!-- ── LEFT COLUMN: Copy + Form ── -->
+      <div class="flex flex-col gap-8 lg:pr-12 xl:pr-20">
+
+        <!-- Eyebrow badge -->
+        <div class="opacity-0-init animate-fade-up delay-100">
+          <div class="eyebrow-badge">
+            <svg width="10" height="10" viewBox="0 0 10 10" fill="none" aria-hidden="true">
+              <path d="M1 9 L5 1 L9 9" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Purposeful Forward Momentum
+          </div>
+        </div>
+
+        <!-- Headline -->
+        <div class="opacity-0-init animate-fade-up delay-200">
+          <h1 class="leading-none font-extrabold" style="font-size: clamp(2.6rem, 6vw, 4.8rem); letter-spacing: -0.025em; color: var(--color-espresso);">
+            Break your<br/>
+            baseline.<br/>
+            <span style="font-weight: 300; font-style: italic; color: #7A6F68;">Step beyond.</span>
+          </h1>
+        </div>
+
+        <!-- Ruling -->
+        <div class="opacity-0-init animate-fade-up delay-300">
+          <span class="ruling"></span>
+        </div>
+
+        <!-- Subheading -->
+        <div class="opacity-0-init animate-fade-up delay-300">
+          <p class="text-base md:text-lg leading-relaxed font-light" style="color: var(--color-muted); max-width: 440px;">
+            Engineered performance essentials built for intentional progress and personal records.
+          </p>
+        </div>
+
+        <!-- Waitlist form -->
+        <div class="opacity-0-init animate-fade-up delay-400" style="max-width: 500px;">
+          <form id="waitlistForm" novalidate>
+            <div class="flex flex-col sm:flex-row gap-3">
+              <div class="flex-1">
+                <label for="emailInput" class="sr-only">Email address</label>
+                <input
+                  type="email"
+                  id="emailInput"
+                  name="email"
+                  class="form-input"
+                  placeholder="Enter your email address"
+                  autocomplete="email"
+                  spellcheck="false"
+                  inputmode="email"
+                  aria-describedby="formMessage"
+                />
+              </div>
+              <button type="submit" class="cta-btn" id="submitBtn" aria-label="Request early access">
+                <span class="spinner" aria-hidden="true"></span>
+                <span class="btn-text">Join the First 500</span>
+                <svg class="btn-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M5 12h14M12 5l7 7-7 7"/>
+                </svg>
+              </button>
+            </div>
+
+            <!-- Inline validation message -->
+            <p id="formMessage" class="form-msg" role="alert" aria-live="polite"></p>
+
+            <!-- Micro-copy -->
+            <p class="text-xs mt-3 font-light" style="color: var(--color-muted); letter-spacing: 0.02em;">
+              Private launch allocation only. No spam.
+            </p>
+          </form>
+        </div>
+
+        <!-- Metric cards -->
+        <div class="opacity-0-init animate-fade-up delay-500 grid grid-cols-3 gap-3" style="max-width: 500px;">
+          <div class="metric-card">
+            <p class="text-xl font-bold" style="color: var(--color-espresso);">500</p>
+            <p class="text-xs mt-1 font-light" style="color: var(--color-muted); letter-spacing: 0.04em;">First Access Spots</p>
+          </div>
+          <div class="metric-card">
+            <p class="text-xl font-bold" style="color: var(--color-espresso);">Q1</p>
+            <p class="text-xs mt-1 font-light" style="color: var(--color-muted); letter-spacing: 0.04em;">Launch — 2027</p>
+          </div>
+          <div class="metric-card">
+            <p class="text-xl font-bold" style="color: var(--color-espresso);">0g</p>
+            <p class="text-xs mt-1 font-light" style="color: var(--color-muted); letter-spacing: 0.04em;">Unnecessary Mass</p>
+          </div>
+        </div>
+
+        <!-- Tag pills -->
+        <div class="opacity-0-init animate-fade-up delay-600 flex flex-wrap gap-2">
+          <span class="tag-pill">Technical Fabric</span>
+          <span class="tag-pill">Biomechanical Precision</span>
+          <span class="tag-pill">Editorial Silhouette</span>
+        </div>
+      </div>
+
+      <!-- ── RIGHT COLUMN: Abstract Vector Visual ── -->
+      <div class="hidden lg:flex items-center justify-center relative" aria-hidden="true">
+        <div class="relative w-full flex items-center justify-center" style="min-height: 560px;">
+
+          <!-- Outer ring -->
+          <div class="absolute rounded-full border opacity-30 animate-float"
+               style="width: 420px; height: 420px; border-color: var(--color-border); animation-duration: 8s;"></div>
+
+          <!-- Inner ring -->
+          <div class="absolute rounded-full border opacity-20"
+               style="width: 300px; height: 300px; border-color: var(--color-blush); animation: spin 22s linear infinite; border-style: dashed;"></div>
+
+          <!-- Extended Vector SVG — abstract ascending 'B' / stride mark -->
+          <div class="vector-glow opacity-0-init animate-fade-in delay-700 relative z-10">
+            <svg width="260" height="340" viewBox="0 0 260 340" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <!-- Background dim circle -->
+              <circle cx="130" cy="170" r="120" fill="rgba(243,179,156,0.08)" />
+
+              <!-- Central axis line (ascending at 15 deg) -->
+              <line x1="60" y1="310" x2="200" y2="30"
+                    stroke="#D9D2CB" stroke-width="1" stroke-dasharray="4 6"
+                    stroke-linecap="round" opacity="0.7"/>
+
+              <!-- Primary stride glyph: angled ascending form -->
+              <g transform="rotate(-15, 130, 170)">
+                <!-- Vertical spine -->
+                <rect x="112" y="60" width="8" height="200" rx="4"
+                      fill="var(--color-espresso)" opacity="0.9"/>
+
+                <!-- Upper lobe (power arc) -->
+                <path d="M120 60 C170 60, 195 85, 195 115 C195 145, 170 165, 120 165"
+                      stroke="var(--color-espresso)" stroke-width="8" fill="none"
+                      stroke-linecap="round" stroke-linejoin="round" opacity="0.9"/>
+
+                <!-- Lower lobe (stride arc) -->
+                <path d="M120 165 C185 165, 215 192, 215 225 C215 258, 185 275, 120 275"
+                      stroke="var(--color-espresso)" stroke-width="8" fill="none"
+                      stroke-linecap="round" stroke-linejoin="round" opacity="0.9"/>
+
+                <!-- Forward momentum arrow — top right -->
+                <g transform="translate(200, 50)">
+                  <line x1="0" y1="12" x2="24" y2="0" stroke="var(--color-blush)" stroke-width="2" stroke-linecap="round"/>
+                  <line x1="12" y1="0" x2="24" y2="0" stroke="var(--color-blush)" stroke-width="2" stroke-linecap="round"/>
+                  <line x1="24" y1="0" x2="24" y2="12" stroke="var(--color-blush)" stroke-width="2" stroke-linecap="round"/>
+                </g>
+              </g>
+
+              <!-- Blush accent stroke — speed line -->
+              <path d="M30 295 L100 275 L160 240 L220 150"
+                    stroke="var(--color-blush)" stroke-width="1.5" fill="none"
+                    stroke-linecap="round" stroke-dasharray="3 5" opacity="0.65"/>
+
+              <!-- Small dot accents -->
+              <circle cx="220" cy="148" r="4" fill="var(--color-blush)" opacity="0.8"/>
+              <circle cx="30" cy="296" r="3" fill="var(--color-border)" opacity="0.9"/>
+              <circle cx="130" cy="55" r="2.5" fill="var(--color-espresso)" opacity="0.4"/>
+
+              <!-- Crosshair annotation mark -->
+              <g transform="translate(32, 55)" opacity="0.35">
+                <line x1="10" y1="0" x2="10" y2="20" stroke="var(--color-espresso)" stroke-width="1" stroke-linecap="round"/>
+                <line x1="0" y1="10" x2="20" y2="10" stroke="var(--color-espresso)" stroke-width="1" stroke-linecap="round"/>
+                <circle cx="10" cy="10" r="5" stroke="var(--color-espresso)" stroke-width="1" fill="none"/>
+              </g>
+
+              <!-- Numeric annotation -->
+              <text x="192" y="320" fill="var(--color-muted)" font-family="'Plus Jakarta Sans', sans-serif"
+                    font-size="10" letter-spacing="2" opacity="0.5">+15°</text>
+            </svg>
+          </div>
+
+          <!-- Orbit blush dot -->
+          <div class="absolute rounded-full"
+               style="width: 10px; height: 10px; background: var(--color-blush); top: 20%; right: 18%; animation: pulseSoft 2.5s ease-in-out infinite; box-shadow: 0 0 0 6px rgba(243,179,156,0.2);"></div>
+
+          <!-- Bottom annotation text -->
+          <div class="absolute bottom-6 left-1/2 -translate-x-1/2 text-center">
+            <p style="font-size: 0.65rem; letter-spacing: 0.18em; color: var(--color-muted); text-transform: uppercase; font-weight: 500;">
+              The Extended Vector — Concept 01
+            </p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Gradient strip at bottom of hero -->
+    <div class="gradient-strip"></div>
+  </main>
+
+
+  <!-- ══════════════════════════════════════════════════════
+       SECONDARY MANIFESTO STRIP
+  ══════════════════════════════════════════════════════ -->
+  <section class="relative py-20 md:py-28 px-6 md:px-10 overflow-hidden" style="background: var(--color-espresso);" aria-labelledby="manifesto-heading">
+    <div class="noise-layer absolute inset-0" aria-hidden="true"></div>
+    <div class="relative z-10 max-w-5xl mx-auto">
+
+      <!-- Overline -->
+      <div class="flex items-center gap-4 mb-10 opacity-0-init animate-fade-up delay-100">
+        <span class="ruling" style="background: rgba(243,179,156,0.4);"></span>
+        <span style="font-size: 0.68rem; letter-spacing: 0.2em; color: rgba(243,179,156,0.7); text-transform: uppercase; font-weight: 500;">Our Discipline</span>
+      </div>
+
+      <blockquote class="opacity-0-init animate-fade-up delay-200">
+        <p id="manifesto-heading" class="font-light leading-snug" style="font-size: clamp(1.6rem, 4vw, 3rem); color: rgba(244,239,234,0.92); letter-spacing: -0.01em;">
+          "Progress is not a sprint.<br/>
+          It is a series of <em style="font-style: italic; font-weight: 300; color: var(--color-blush);">intentional strides</em><br/>
+          laid with discipline and precision."
+        </p>
+      </blockquote>
+
+      <!-- Pillar grid -->
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 mt-16 opacity-0-init animate-fade-up delay-400">
+
+        <div class="border-l-2 pl-6" style="border-color: rgba(243,179,156,0.35);">
+          <h3 class="text-sm font-semibold mb-2" style="color: var(--color-blush); letter-spacing: 0.1em; text-transform: uppercase;">Purposeful Engineering</h3>
+          <p class="text-sm font-light leading-relaxed" style="color: rgba(244,239,234,0.6);">Every seam and stitch exists for kinetic efficiency, weight reduction, and aerodynamic flow.</p>
+        </div>
+
+        <div class="border-l-2 pl-6" style="border-color: rgba(243,179,156,0.35);">
+          <h3 class="text-sm font-semibold mb-2" style="color: var(--color-blush); letter-spacing: 0.1em; text-transform: uppercase;">Subtle Elevation</h3>
+          <p class="text-sm font-light leading-relaxed" style="color: rgba(244,239,234,0.6);">Muted, natural palettes and editorial silhouettes built for pre-race focus and peak competition.</p>
+        </div>
+
+        <div class="border-l-2 pl-6" style="border-color: rgba(243,179,156,0.35);">
+          <h3 class="text-sm font-semibold mb-2" style="color: var(--color-blush); letter-spacing: 0.1em; text-transform: uppercase;">Measurable Progress</h3>
+          <p class="text-sm font-light leading-relaxed" style="color: rgba(244,239,234,0.6);">Gear engineered to accompany athletes through training blocks, milestones, and PRs.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════════════════════
+       FOOTER
+  ══════════════════════════════════════════════════════ -->
+  <footer class="px-6 md:px-10 py-10 border-t" style="border-color: var(--color-border); background: var(--color-base);">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+
+      <!-- Left: wordmark + copyright -->
+      <div class="flex flex-col gap-2">
+        <a href="#" class="flex items-center gap-0.5 no-underline" aria-label="BeyondStride Home">
+          <span class="wordmark-beyond" style="font-size: 0.76rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-espresso);">BEYOND</span>
+          <span class="wordmark-stride" style="font-size: 0.76rem; text-transform: uppercase; color: var(--color-espresso);">STRIDE</span>
+        </a>
+        <p class="text-xs font-light" style="color: var(--color-muted); letter-spacing: 0.02em;">
+          &copy; <span id="year"></span> BeyondStride. All rights reserved.
+        </p>
+      </div>
+
+      <!-- Center: links -->
+      <div class="flex flex-wrap items-center gap-5">
+        <button id="privacyTrigger" class="footer-link font-medium" aria-haspopup="dialog" aria-expanded="false">
+          Privacy Policy
+        </button>
+        <a href="mailto:hello@beyondstride.com" class="footer-link">
+          hello@beyondstride.com
+        </a>
+        <a href="#" class="footer-link">Terms</a>
+      </div>
+
+      <!-- Right: status + tagline -->
+      <div class="text-right hidden md:block">
+        <p class="text-xs font-light" style="color: var(--color-muted); letter-spacing: 0.04em;">
+          Intentional momentum, forward trajectory.
+        </p>
+        <div class="flex items-center justify-end gap-2 mt-1">
+          <span class="status-dot" style="width:6px;height:6px;opacity:0.7;" aria-hidden="true"></span>
+          <span class="text-xs font-medium" style="color: var(--color-muted); letter-spacing: 0.06em;">Launching Q1 2027</span>
+        </div>
+      </div>
+
+    </div>
+  </footer>
+
+
+  <!-- ══════════════════════════════════════════════════════
+       PRIVACY MODAL
+  ══════════════════════════════════════════════════════ -->
+  <div class="modal-overlay" id="privacyModal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div class="modal-card">
+      <div class="flex items-start justify-between mb-5">
+        <h2 id="modal-title" class="font-bold text-base" style="letter-spacing: 0.02em; color: var(--color-espresso);">
+          Privacy Policy
+        </h2>
+        <button id="closeModal" class="text-sm font-medium ml-4 flex-shrink-0"
+                style="color: var(--color-muted); background: none; border: none; cursor: pointer; padding: 2px 4px; border-radius: 3px; transition: color 200ms ease;"
+                aria-label="Close privacy policy modal"
+                onmouseover="this.style.color='var(--color-espresso)'"
+                onmouseout="this.style.color='var(--color-muted)'">
+          ✕ Close
+        </button>
+      </div>
+
+      <div class="flex flex-col gap-4">
+        <div>
+          <h3 class="text-xs font-semibold mb-1 uppercase tracking-widest" style="color: var(--color-espresso); letter-spacing: 0.12em;">Data Collection</h3>
+          <p class="text-sm font-light leading-relaxed" style="color: var(--color-muted);">
+            We collect only your email address when you join our waitlist. No additional personal data is gathered without your explicit consent.
+          </p>
+        </div>
+        <div>
+          <h3 class="text-xs font-semibold mb-1 uppercase tracking-widest" style="color: var(--color-espresso); letter-spacing: 0.12em;">Data Use</h3>
+          <p class="text-sm font-light leading-relaxed" style="color: var(--color-muted);">
+            Your email is used solely to notify you of the BeyondStride product launch and grant priority access. We will never sell or share your data with third parties for marketing purposes.
+          </p>
+        </div>
+        <div>
+          <h3 class="text-xs font-semibold mb-1 uppercase tracking-widest" style="color: var(--color-espresso); letter-spacing: 0.12em;">Unsubscribe</h3>
+          <p class="text-sm font-light leading-relaxed" style="color: var(--color-muted);">
+            You may opt out at any time by contacting us at <a href="mailto:hello@beyondstride.com" style="color: var(--color-espresso); font-weight: 500;">hello@beyondstride.com</a>.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ══════════════════════════════════════════════════════
+       JAVASCRIPT
+  ══════════════════════════════════════════════════════ -->
+  <script>
+    /* ── Year ──────────────────────────────────────────── */
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    /* ── IntersectionObserver — stagger on scroll ───────── */
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.remove('opacity-0-init');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll('.opacity-0-init').forEach(el => io.observe(el));
+
+    /* ── Form validation + mock submit ─────────────────── */
+    const form      = document.getElementById('waitlistForm');
+    const emailEl   = document.getElementById('emailInput');
+    const submitBtn = document.getElementById('submitBtn');
+    const msgEl     = document.getElementById('formMessage');
+
+    const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    function showMessage(text, type) {
+      msgEl.textContent = text;
+      msgEl.className   = `form-msg visible ${type}`;
+    }
+    function clearMessage() {
+      msgEl.className = 'form-msg';
+      msgEl.textContent = '';
+    }
+
+    emailEl.addEventListener('input', () => {
+      emailEl.classList.remove('error', 'success');
+      clearMessage();
+    });
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = emailEl.value.trim();
+
+      if (!email) {
+        emailEl.classList.add('error');
+        showMessage('Please enter your email address.', 'error');
+        emailEl.focus();
+        return;
+      }
+      if (!EMAIL_RE.test(email)) {
+        emailEl.classList.add('error');
+        showMessage('That doesn\'t look like a valid email. Please check and try again.', 'error');
+        emailEl.focus();
+        return;
+      }
+
+      /* Loading state */
+      submitBtn.classList.add('loading');
+      submitBtn.disabled = true;
+      clearMessage();
+      emailEl.classList.remove('error', 'success');
+
+      try {
+        /* ── Mock API (replace with real endpoint) ── */
+        await mockApiSubmit(email);
+
+        /* Success state */
+        emailEl.classList.add('success');
+        emailEl.value = '';
+        showMessage('✓ Your priority access is locked. We\'ll be in touch.', 'success');
+        submitBtn.querySelector('.btn-text').textContent = 'Access Locked';
+        submitBtn.querySelector('.btn-arrow').style.display = 'none';
+
+      } catch (err) {
+        showMessage('Something went wrong. Please try again shortly.', 'error');
+        emailEl.classList.add('error');
+      } finally {
+        submitBtn.classList.remove('loading');
+        submitBtn.disabled = false;
+      }
+    });
+
+    /* ── Mock API handler ───────────────────────────────── */
+    function mockApiSubmit(email) {
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          /* Simulate occasional failure (5% chance) for realism */
+          Math.random() < 0.05 ? reject(new Error('Server error')) : resolve({ ok: true, email });
+        }, 1400);
+      });
+    }
+
+    /* Swap to real endpoint example:
+    async function realApiSubmit(email) {
+      const res = await fetch('https://your-endpoint.com/waitlist', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email })
+      });
+      if (!res.ok) throw new Error('Non-2xx response');
+      return res.json();
+    }
+    */
+
+    /* ── Privacy modal ──────────────────────────────────── */
+    const modal    = document.getElementById('privacyModal');
+    const trigger  = document.getElementById('privacyTrigger');
+    const closeBtn = document.getElementById('closeModal');
+    let lastFocus  = null;
+
+    function openModal() {
+      lastFocus = document.activeElement;
+      modal.classList.add('open');
+      trigger.setAttribute('aria-expanded', 'true');
+      closeBtn.focus();
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+      modal.classList.remove('open');
+      trigger.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+      if (lastFocus) lastFocus.focus();
+    }
+
+    trigger.addEventListener('click', openModal);
+    closeBtn.addEventListener('click', closeModal);
+
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) closeModal();
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && modal.classList.contains('open')) closeModal();
+    });
+
+    /* ── Subtle parallax on hero orbs ──────────────────── */
+    const orbs = document.querySelectorAll('.orb');
+    let rafId;
+
+    document.addEventListener('mousemove', (e) => {
+      if (rafId) cancelAnimationFrame(rafId);
+      rafId = requestAnimationFrame(() => {
+        const cx = window.innerWidth / 2;
+        const cy = window.innerHeight / 2;
+        const dx = (e.clientX - cx) / cx;  // -1 to 1
+        const dy = (e.clientY - cy) / cy;
+
+        orbs.forEach((orb, i) => {
+          const depth = i === 0 ? 18 : 10;
+          orb.style.transform = `translate(${dx * depth}px, ${dy * depth}px)`;
+        });
+      });
+    });
+
+    /* ── Scroll-triggered stagger re-run for manifesto ─── */
+    const manifestoItems = document.querySelectorAll('section .opacity-0-init');
+    const sectionIo = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => {
+            entry.target.classList.remove('opacity-0-init');
+          }, i * 120);
+          sectionIo.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.08 });
+
+    manifestoItems.forEach(el => sectionIo.observe(el));
+  </script>
+
+</body>
+</html>

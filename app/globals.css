@@ -1,0 +1,272 @@
+@import "tailwindcss";
+
+@theme {
+  --font-jakarta: var(--font-jakarta);
+  --font-serif: var(--font-serif);
+}
+
+:root {
+  --color-base: #F4EFEA;
+  --color-base-subtle: #FAF6F2;
+  --color-card-bg: rgba(255, 255, 255, 0.65);
+  --color-blush: #F3B39C;
+  --color-flame: #FF4D24;
+  --color-espresso: #181516;
+  --color-obsidian: #0D0B0C;
+  --color-muted: #786E67;
+  --color-border: #DCD5CD;
+  --color-border-subtle: rgba(220, 213, 205, 0.5);
+  --radius-pill: 9999px;
+  --radius-card: 16px;
+  --transition-fluid: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-jakarta), 'Plus Jakarta Sans', sans-serif;
+  background-color: var(--color-base);
+  color: var(--color-espresso);
+  overflow-x: hidden;
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ─── Typography Utility Classes ──────────────────────── */
+.font-display-serif {
+  font-family: var(--font-serif), 'Playfair Display', serif;
+}
+
+.wordmark-beyond {
+  font-weight: 300;
+  letter-spacing: 0.16em;
+}
+
+.wordmark-stride {
+  font-weight: 800;
+  letter-spacing: 0.08em;
+}
+
+/* ─── Architectural Grid Background & Crosshairs ────── */
+.architectural-grid {
+  background-size: 48px 48px;
+  background-image: 
+    linear-gradient(to right, rgba(220, 213, 205, 0.35) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(220, 213, 205, 0.35) 1px, transparent 1px);
+}
+
+.architectural-grid-dark {
+  background-size: 48px 48px;
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+}
+
+/* Crosshair '+' markers */
+.crosshair-corner {
+  position: absolute;
+  width: 9px;
+  height: 9px;
+  pointer-events: none;
+}
+.crosshair-corner::before,
+.crosshair-corner::after {
+  content: '';
+  position: absolute;
+  background-color: currentColor;
+}
+.crosshair-corner::before {
+  top: 4px;
+  left: 0;
+  right: 0;
+  height: 1px;
+}
+.crosshair-corner::after {
+  left: 4px;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+}
+
+/* ─── Noise Overlay ─────────────────────────────────── */
+.noise-layer {
+  position: relative;
+}
+.noise-layer::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.03;
+  z-index: 1;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 160px 160px;
+}
+
+/* ─── 3D Perspective & Spatial Containers ────────────── */
+.perspective-1000 {
+  perspective: 1000px;
+}
+.perspective-1400 {
+  perspective: 1400px;
+}
+.preserve-3d {
+  transform-style: preserve-3d;
+}
+.backface-hidden {
+  backface-visibility: hidden;
+}
+
+/* ─── Glassmorphism & Specular Sheen ─────────────────── */
+.glass-panel {
+  background: rgba(255, 255, 255, 0.65);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  box-shadow: 
+    0 4px 24px -1px rgba(35, 31, 32, 0.04),
+    0 1px 2px 0 rgba(35, 31, 32, 0.03);
+}
+
+.glass-panel-dark {
+  background: rgba(24, 21, 22, 0.7);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 
+    0 20px 50px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.glass-pill {
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(217, 210, 203, 0.6);
+}
+
+/* ─── Dynamic Specular Shimmer ───────────────────────── */
+.specular-shine {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(
+    circle 280px at var(--mouse-x, 50%) var(--mouse-y, 50%),
+    rgba(255, 255, 255, 0.45),
+    transparent 70%
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.group:hover .specular-shine {
+  opacity: 1;
+}
+
+/* ─── Glowing Gradient Border ────────────────────────── */
+.gradient-border-glow {
+  position: relative;
+}
+.gradient-border-glow::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg, rgba(243, 179, 156, 0.8), rgba(255, 77, 36, 0.4), transparent 60%);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+/* ─── Kinetic Buttons ───────────────────────────────── */
+.btn-magnetic {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  background: var(--color-espresso);
+  color: #FAF6F2;
+  font-family: inherit;
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 9999px;
+  padding: 16px 32px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.35s var(--transition-fluid);
+  box-shadow: 0 4px 20px rgba(24, 21, 22, 0.18);
+}
+
+.btn-magnetic::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, #FF5A36, #F3B39C);
+  transform: translateY(100%);
+  transition: transform 0.4s var(--transition-fluid);
+  border-radius: inherit;
+}
+
+.btn-magnetic:hover::before {
+  transform: translateY(0);
+}
+
+.btn-magnetic:hover {
+  color: #181516;
+  border-color: rgba(255, 90, 54, 0.3);
+  box-shadow: 0 10px 30px rgba(255, 90, 54, 0.28);
+}
+
+.btn-magnetic-content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* ─── Pulse Ring Animation ───────────────────────────── */
+@keyframes pulseRing {
+  0% { transform: scale(0.95); opacity: 0.8; }
+  50% { transform: scale(1.6); opacity: 0; }
+  100% { transform: scale(0.95); opacity: 0; }
+}
+.pulse-beacon {
+  position: relative;
+}
+.pulse-beacon::after {
+  content: '';
+  position: absolute;
+  inset: -3px;
+  border-radius: 50%;
+  border: 1.5px solid currentColor;
+  animation: pulseRing 2.2s infinite ease-out;
+}
+
+/* ─── Scrollbar ─────────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 5px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-base);
+}
+::-webkit-scrollbar-thumb {
+  background: #D5CDC4;
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #B8ADA2;
+}
